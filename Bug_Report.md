@@ -4,6 +4,8 @@ Dưới đây là các lỗi phát hiện được trong quá trình chạy Pipe
 
 ## Issue 1: [Critical] SUT rò rỉ thông tin hệ thống (Information Disclosure / Stack Trace Leak)
 
+- **Endpoint:** `POST /api/register`
+
 - **Mức độ (Severity):** **CRITICAL**
 
 - **Phân loại (Category):** **Security** (Information Exposure)
@@ -19,6 +21,8 @@ Dưới đây là các lỗi phát hiện được trong quá trình chạy Pipe
   ![alt text](images/image-1.png)
 
 ## Issue 2: [Critical Security] Lỗ hổng bảo mật: Nhận mã độc XSS và Mass Assignment
+
+- **Endpoint:** `POST /api/register`
 
 - **Mức độ (Severity):** **CRITICAL (Security)**
 
@@ -39,6 +43,8 @@ Dưới đây là các lỗi phát hiện được trong quá trình chạy Pipe
 
 ## Issue 3: [Major] Lỗi Logic Nghiệp Vụ: Bỏ qua kiểm tra khớp Mật khẩu (Password Mismatch Ignored)
 
+- **Endpoint:** `POST /api/register`
+
 - **Mức độ (Severity):** **MAJOR**
 
 - **Phân loại (Category):** **Functional** (Business Logic)
@@ -54,6 +60,8 @@ Dưới đây là các lỗi phát hiện được trong quá trình chạy Pipe
   ![alt text](images/image-3.png)
 
 ## Issue 4. [Major] Lỗi Logic Nghiệp Vụ: Cho phép đăng ký trùng Email (Duplicate Email)
+
+- **Endpoint:** `POST /api/register`
 
 - **Mức độ (Severity):** **MAJOR**
 
@@ -78,6 +86,8 @@ Dưới đây là các lỗi phát hiện được trong quá trình chạy Pipe
    <center><i>Tài khoản với email valid1@domain.com được tạo thành công lần 2</i></center>
 
 ## Issue 5. [Major] Thiếu hoàn toàn Data Validation (No Input Validation)
+
+- **Endpoint:** `POST /api/register`
 
 - **Mức độ (Severity):** **MAJOR**
 
