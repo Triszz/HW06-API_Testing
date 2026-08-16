@@ -1,0 +1,98 @@
+{
+  "info": {
+    "_postman_id": "edfa6239-a7e4-444d-a6c4-f122be172b4f",
+    "name": "HW06_API_Test_Suite",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "48275913",
+    "_collection_link": "https://go.postman.co/collection/48275913-edfa6239-a7e4-444d-a6c4-f122be172b4f?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "API 1: POST /api/register",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "if (pm.iterationData.get(\"test_id\") === \"TC_REG_25\") {\r",
+              "    pm.request.method = \"GET\";\r",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "let expectedStatus = pm.iterationData.get(\"expected_status\");\r",
+              "let testId = pm.iterationData.get(\"test_id\");\r",
+              "\r",
+              "pm.test(\"[\" + testId + \"] Status code matches expected: \" + expectedStatus, function () {\r",
+              "    pm.response.to.have.status(expectedStatus);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{{payload}}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/register",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "pm.request.headers.add({\r",
+          "    key: 'X-Student-Id',\r",
+          "    value: '23127503'\r",
+          "});\r",
+          "\r",
+          "console.log(\"Anti-Cheat Verification: Injected Header X-Student-Id = 23127503\");"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}
