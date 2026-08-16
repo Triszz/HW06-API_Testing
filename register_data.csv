@@ -1,0 +1,36 @@
+test_id,payload,expected_status
+TC_REG_01,"{""name"":""User A"",""email"":""valid1@domain.com"",""password"":""Password1!"",""confirm_password"":""Password1!""}",200
+TC_REG_02,"{""name"":""User B"",""email"":""valid2@domain.com"",""password"":""StrongPassword123!"",""confirm_password"":""StrongPassword123!""}",200
+TC_REG_03,"{""name"":"""",""email"":""test3@domain.com"",""password"":""Password1!"",""confirm_password"":""Password1!""}",400
+TC_REG_04,"{""email"":""test4@domain.com"",""password"":""Password1!"",""confirm_password"":""Password1!""}",400
+TC_REG_05,"{""name"":""User C"",""email"":"""",""password"":""Password1!"",""confirm_password"":""Password1!""}",400
+TC_REG_06,"{""name"":""User D"",""email"":""userdomain.com"",""password"":""Password1!"",""confirm_password"":""Password1!""}",400
+TC_REG_07,"{""name"":""User E"",""email"":""user@"",""password"":""Password1!"",""confirm_password"":""Password1!""}",400
+TC_REG_08,"{""name"":""User F"",""email"":""@domain.com"",""password"":""Password1!"",""confirm_password"":""Password1!""}",400
+TC_REG_09,"{""name"":""User G"",""email"":""valid1@domain.com"",""password"":""Password1!"",""confirm_password"":""Password1!""}",400
+TC_REG_10,"{""name"":""User H"",""email"":""test5@domain.com"",""password"":"""",""confirm_password"":""""}",400
+TC_REG_11,"{""name"":""User I"",""email"":""test6@domain.com"",""password"":""Pass12!"",""confirm_password"":""Pass12!""}",400
+TC_REG_12,"{""name"":""User J"",""email"":""test7@domain.com"",""password"":""password1!"",""confirm_password"":""password1!""}",400
+TC_REG_13,"{""name"":""User K"",""email"":""test8@domain.com"",""password"":""PASSWORD1!"",""confirm_password"":""PASSWORD1!""}",400
+TC_REG_14,"{""name"":""User L"",""email"":""test9@domain.com"",""password"":""Password@!"",""confirm_password"":""Password@!""}",400
+TC_REG_15,"{""name"":""User M"",""email"":""test10@domain.com"",""password"":""Password12"",""confirm_password"":""Password12""}",400
+TC_REG_16,"{""name"":""User N"",""email"":""test11@domain.com"",""confirm_password"":""Password1!""}",400
+TC_REG_17,"{""name"":""User O"",""email"":""test12@domain.com"",""password"":""Password1!"",""confirm_password"":""""}",400
+TC_REG_18,"{""name"":""User P"",""email"":""test13@domain.com"",""password"":""Password1!"",""confirm_password"":""password1!""}",400
+TC_REG_19,"{""name"":""User Q"",""email"":""test14@domain.com"",""password"":""Password1!"",""confirm_password"":""AnotherPassword1!""}",400
+TC_REG_20,"{""name"":123,""email"":""test15@domain.com"",""password"":""Password1!"",""confirm_password"":""Password1!""}",400
+TC_REG_21,"{""name"":""User A"",""email"":""admin@domain.com' OR 1=1 --"",""password"":""Password1!"",""confirm_password"":""Password1!""}",400
+TC_REG_22,"{""name"":""User B"",""email"":""test@...'; WAITFOR DELAY '0:0:5'--"",""password"":""Password1!"",""confirm_password"":""Password1!""}",400
+TC_REG_23,"{""name"":""<script>alert('XSS')</script>"",""email"":""xss@domain.com"",""password"":""Password1!"",""confirm_password"":""Password1!""}",400
+TC_REG_24,"{""name"":""AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"",""email"":""buffer@domain.com"",""password"":""Password1!"",""confirm_password"":""Password1!""}",400
+TC_REG_25,{},405
+TC_REG_26,"{""name"":""User C"",""email"":""text@domain.com"",""password"":""Password1!"",""confirm_password"":""Password1!""}",415
+TC_REG_27,"{""name"":""User D"",""email"":""json@..."",""password"":""Password1!"",""confirm_password"":""Password1!""}",400
+TC_REG_28,"{""name"":""User E"",""email"":""json2@..."",""password"":""Password1!"",""confirm_password"":""Password1!""}",400
+TC_REG_29,{},400
+TC_REG_30,"{""name"":""User F"",""email"":""extra@domain.com"",""password"":""Password1!"",""confirm_password"":""Password1!"",""role"":""ADMIN""}",400
+TC_REG_31,"{""name"":""Spammer"",""email"":""spam_limit@domain.com"",""password"":""Password1!"",""confirm_password"":""Password1!""}",429
+TC_REG_32,"{""name"":""User Space"",""email"":""space@domain.com"",""password"":"" Password1! "",""confirm_password"":"" Password1! ""}",200
+TC_REG_33,"{""name"":""Nguyễn Văn 🤖"",""email"":""unicode@domain.com"",""password"":""Password1!"",""confirm_password"":""Password1!""}",200
+TC_REG_34,"{""name"":""Hacker"",""email"":""admin@domain.com "",""password"":""Password1!"",""confirm_password"":""Password1!""}",400
+TC_REG_35,"{""name"":""User State"",""email"":""state@domain.com"",""password"":""Password1!"",""confirm_password"":""Password1!""}",400
