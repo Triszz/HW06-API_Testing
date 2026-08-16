@@ -104,6 +104,8 @@ Dưới đây là danh sách 5 lỗi (Bugs) nghiêm trọng được bóc tách 
 
 - **Mức độ (Severity):** **CRITICAL**
 
+- **Phân loại (Category):** **Security** (Information Exposure)
+
 - **Mô tả chi tiết:** Khi người dùng gửi một payload JSON bị sai cú pháp (thiếu dấu ngoặc nhọn `}` ở cuối), thay vì bắt lỗi và trả về mã `400 Bad Request`, máy chủ (Express.js) lại không thể xử lý, dẫn đến crash nội bộ và trả về một trang HTML chứa toàn bộ Stack Trace báo lỗi. Lỗi này được phát hiện ở `TC_REG_28`.
 
 - **Tác động (Impact):** Cực kỳ nguy hiểm. Hệ thống đã vô tình phơi bày đường dẫn tuyệt đối trên máy chủ của hệ thống (`D:\Software Testing\Seminar\eshop-sut\backend\node_modules\...`) cùng các thư viện đang sử dụng. Kẻ tấn công có thể dựa vào thông tin kiến trúc này để dò quét và khai thác các lỗ hổng sâu hơn.
@@ -117,6 +119,8 @@ Dưới đây là danh sách 5 lỗi (Bugs) nghiêm trọng được bóc tách 
 ### 2. [Critical Security] Lỗ hổng bảo mật: Nhận mã độc XSS và Mass Assignment
 
 - **Mức độ (Severity):** **CRITICAL (Security)**
+
+- **Phân loại (Category):** **Security** (Injection & Broken Access Control)
 
 - **Mô tả chi tiết:** Backend API hoàn toàn không thực hiện mã hóa (encode) hay thanh lọc (sanitize) dữ liệu đầu vào. Cụ thể:
   - Ở `TC_REG_23`, hệ thống chấp nhận chuỗi chứa mã độc HTML/JS `<script>alert('XSS')</script>` vào trường `name` và trả về `200 OK`.
@@ -135,6 +139,8 @@ Dưới đây là danh sách 5 lỗi (Bugs) nghiêm trọng được bóc tách 
 
 - **Mức độ (Severity):** **MAJOR**
 
+- **Phân loại (Category):** **Functional** (Business Logic)
+
 - **Mô tả chi tiết:** Lập trình viên thiết kế trường `confirm_password` ở phía Client nhưng lại không có code xử lý so sánh với trường `password` ở phía Server. Ở `TC_REG_19`, dù mật khẩu xác nhận được gửi lên là `"AnotherPassword1!"` (khác biệt hoàn toàn với mật khẩu gốc), hệ thống vẫn bỏ qua và trả về `200 OK`.
 
 - **Tác động (Impact):** Gây rủi ro nghiêm trọng về trải nghiệm người dùng (UX). Nếu người dùng gõ nhầm mật khẩu ở ô đầu tiên, họ sẽ không hề hay biết và sau này bị mất quyền truy cập (không thể đăng nhập lại vào tài khoản vừa tạo).
@@ -148,6 +154,8 @@ Dưới đây là danh sách 5 lỗi (Bugs) nghiêm trọng được bóc tách 
 ### 4. [Major] Lỗi Logic Nghiệp Vụ: Cho phép đăng ký trùng Email (Duplicate Email)
 
 - **Mức độ (Severity):** **MAJOR**
+
+- **Phân loại (Category):** **Functional** (Data Integrity)
 
 - **Mô tả chi tiết:** API thiếu khâu truy vấn kiểm tra dữ liệu tồn tại (Unique Constraint) trong Database. Ở request `TC_REG_01`, tài khoản với email `valid1@domain.com` được tạo thành công với ID là `3`. Tuy nhiên, khi gửi lại đúng email này ở `TC_REG_09`, hệ thống vẫn tiếp nhận và tạo ra một tài khoản mới tinh với ID là `11`.
 
@@ -170,6 +178,8 @@ Dưới đây là danh sách 5 lỗi (Bugs) nghiêm trọng được bóc tách 
 ### 5. [Major] Thiếu hoàn toàn Data Validation (No Input Validation)
 
 - **Mức độ (Severity):** **MAJOR**
+
+- **Phân loại (Category):** **Functional** (Input Validation)
 
 - **Mô tả chi tiết:** Server không có bất kỳ bộ kiểm tra ràng buộc (Validator) nào cho các trường đầu vào. Hệ thống dễ dàng trả về `200 OK` cho các kịch bản:
   - Payload rỗng hoàn toàn `{}` (`TC_REG_29`).
