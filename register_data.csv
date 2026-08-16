@@ -26,7 +26,7 @@ TC_REG_24,"{""name"":""AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 TC_REG_25,{},405
 TC_REG_26,"{""name"":""User C"",""email"":""text@domain.com"",""password"":""Password1!"",""confirm_password"":""Password1!""}",415
 TC_REG_27,"{""name"":""User D"",""email"":""json@..."",""password"":""Password1!"",""confirm_password"":""Password1!""}",400
-TC_REG_28,"{""name"":""User E"",""email"":""json2@..."",""password"":""Password1!"",""confirm_password"":""Password1!""}",400
+TC_REG_28,"{""name"":""User E"",""email"":""json2@..."",""password"":""Password1!"",""confirm_password"":""Password1!""",400
 TC_REG_29,{},400
 TC_REG_30,"{""name"":""User F"",""email"":""extra@domain.com"",""password"":""Password1!"",""confirm_password"":""Password1!"",""role"":""ADMIN""}",400
 TC_REG_31,"{""name"":""Spammer"",""email"":""spam_limit@domain.com"",""password"":""Password1!"",""confirm_password"":""Password1!""}",429
@@ -34,3 +34,5 @@ TC_REG_32,"{""name"":""User Space"",""email"":""space@domain.com"",""password"":
 TC_REG_33,"{""name"":""Nguyễn Văn 🤖"",""email"":""unicode@domain.com"",""password"":""Password1!"",""confirm_password"":""Password1!""}",200
 TC_REG_34,"{""name"":""Hacker"",""email"":""admin@domain.com "",""password"":""Password1!"",""confirm_password"":""Password1!""}",400
 TC_REG_35,"{""name"":""User State"",""email"":""state@domain.com"",""password"":""Password1!"",""confirm_password"":""Password1!""}",400
+TC_REG_36,"{""name"":""User R"",""email"":456,""password"":""Password1!"",""confirm_password"":""Password1!""}",400
+TC_REG_37,"{""name"":""User S"",""email"":""test16@domain.com"",""password"":true,""confirm_password"":true}",400
