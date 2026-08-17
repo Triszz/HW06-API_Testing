@@ -1,0 +1,3 @@
+test_id,payload,expected_status
+TC_REG_01,"{""name"":""User A"",""email"":""valid1@domain.com"",""password"":""Password1!"",""confirm_password"":""Password1!""}",200
+TC_REG_02,"{""name"":""User B"",""email"":""valid2@domain.com"",""password"":""StrongPassword123!"",""confirm_password"":""StrongPassword123!""}",200

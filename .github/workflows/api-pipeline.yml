@@ -31,7 +31,7 @@ jobs:
         run: |
           newman run HW06_API_Test_Suite.postman_collection.json \
             -e "EShop - Local Environment.postman_environment.json" \
-            -d register_data.csv \
+            -d -d register_green.csv \
             -r htmlextra,cli
 
       - name: 6. Upload HTML Report
