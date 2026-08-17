@@ -17,7 +17,7 @@
 ### 2.1. Pipeline Đỏ (Failing Test Cases)
 
 - **Mô tả:** Commit chạy bộ dữ liệu gốc `register_data.csv` (37 TCs). Do hệ thống Backend tồn tại nhiều lỗ hổng bảo mật và thiếu Validation (đã trình bày ở phần Report Bugs), các assertions bị đánh fail, dẫn đến pipeline chuyển trạng thái thất bại (Red).
-- **Commit Message:** `test: run newman pipeline with original test cases (expecting failures)`
+- **Commit Message:** `test: run newman pipeline with original test cases (expecting failures) p2`
 - **GitHub Action Link:** https://github.com/Triszz/HW06-API_Testing/actions/runs/32044293652/job/95428887514#step:6:563
 - **Screenshot:**
 
@@ -26,7 +26,8 @@
 ### 2.2. Pipeline Xanh (All Test Cases Passing)
 
 - **Mô tả:** Chạy luồng CI/CD với tệp cấu hình dữ liệu trích xuất `register_green.csv` (Chỉ chứa các kịch bản Happy Path - dữ liệu hợp lệ). Toàn bộ Assertions đều Passed, chứng minh quy trình CI/CD được thiết lập hoàn toàn chính xác và sẵn sàng hoạt động ổn định khi team Dev sửa xong lỗi hệ thống.
-- **Commit Message:** `chore: use happy path data to verify green pipeline`
-- **GitHub Action Link:** `[Dán link GitHub Actions run màu xanh vào đây]`
+- **Commit Message:** `chore: use happy path data to verify green pipeline p2`
+- **GitHub Action Link:** https://github.com/Triszz/HW06-API_Testing/actions/runs/32044759265/job/95430161803
 - **Screenshot:**
-  `![Green Pipeline](link_anh_chup_pipeline_xanh.png)`
+
+  ![alt text](images/image-11.png)
