@@ -1,0 +1,42 @@
+name: API Automated Testing Pipeline
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  test-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 1. Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 2. Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: 3. Khởi động Backend EShop (SUT)
+        run: |
+          cd backend
+          npm install
+          npm start &
+          sleep 10  # Chờ 10 giây để server khởi động hoàn tất ở port 3000
+
+      - name: 4. Cài đặt Newman & HTML Extra Reporter
+        run: |
+          npm install -g newman newman-reporter-htmlextra
+
+      - name: 5. Chạy API Test Suite với Newman
+        run: |
+          newman run HW06_API_Test_Suite.postman_collection.json \
+            -e "EShop - Local Environment.postman_environment.json" \
+            -d register_data.csv \
+            -r htmlextra,cli
+
+      - name: 6. Upload HTML Report
+        uses: actions/upload-artifact@v4
+        if: always() # Luôn upload report dù test pass hay fail
+        with:
+          name: Newman-API-Report
+          path: newman/
