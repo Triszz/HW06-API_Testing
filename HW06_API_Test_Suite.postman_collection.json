@@ -8,44 +8,157 @@
   },
   "item": [
     {
-      "name": "API 1: POST /api/register",
-      "event": [
+      "name": "API 1: Account Registration",
+      "item": [
         {
-          "listen": "prerequest",
-          "script": {
-            "exec": [
-              "if (pm.iterationData.get(\"test_id\") === \"TC_REG_25\") {\r",
-              "    pm.request.method = \"GET\";\r",
-              "}"
-            ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
-          }
-        },
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "let expectedStatus = pm.iterationData.get(\"expected_status\");\r",
-              "let testId = pm.iterationData.get(\"test_id\");\r",
-              "\r",
-              "pm.test(\"[\" + testId + \"] Status code matches expected: \" + expectedStatus, function () {\r",
-              "    pm.response.to.have.status(expectedStatus);\r",
-              "});"
-            ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
-          }
+          "name": "API 1: POST /api/register",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.request.headers.upsert({key: 'X-Student-Id', value: '23127503'});\r",
+                  "console.log(\"Anti-Cheat Verification: Injected Header X-Student-Id = 23127503 for API 1\");\r",
+                  "\r",
+                  "if (pm.iterationData.get(\"test_id\") === \"TC_REG_25\") {\r",
+                  "    pm.request.method = \"GET\";\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let expectedStatus = pm.iterationData.get(\"expected_status\");\r",
+                  "let testId = pm.iterationData.get(\"test_id\");\r",
+                  "\r",
+                  "pm.test(\"[\" + testId + \"] Status code matches expected: \" + expectedStatus, function () {\r",
+                  "    pm.response.to.have.status(expectedStatus);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{{payload}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "register"
+              ]
+            }
+          },
+          "response": []
         }
-      ],
+      ]
+    },
+    {
+      "name": "API 2: Apply Coupon",
+      "item": [
+        {
+          "name": "API 2: POST /api/apply-coupon",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.request.headers.upsert({key: 'X-Student-Id', value: '23127503'});\r",
+                  "console.log(\"Anti-Cheat Verification: Injected Header X-Student-Id = 23127503 for API 2\");\r",
+                  "\r",
+                  "let testId = pm.iterationData.get(\"test_id\");\r",
+                  "let validToken = pm.environment.get(\"jwt_token\");\r",
+                  "\r",
+                  "if (testId === \"TC_COUPON_12\") {\r",
+                  "    pm.request.headers.remove(\"Authorization\");\r",
+                  "} \r",
+                  "else if (testId === \"TC_COUPON_34\") {\r",
+                  "    pm.request.headers.upsert({key: 'Authorization', value: 'Bearer chuoi_token_rac_12345'});\r",
+                  "} \r",
+                  "else if (testId === \"TC_COUPON_35\") {\r",
+                  "    pm.request.headers.upsert({key: 'Authorization', value: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MTYyMzkwMjJ9.signature'});\r",
+                  "} \r",
+                  "else {\r",
+                  "    pm.request.headers.upsert({key: 'Authorization', value: 'Bearer ' + validToken});\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let expectedStatus = pm.iterationData.get(\"expected_status\");\r",
+                  "let testId = pm.iterationData.get(\"test_id\");\r",
+                  "\r",
+                  "pm.test(\"[\" + testId + \"] Status code matches expected: \" + expectedStatus, function () {\r",
+                  "    pm.response.to.have.status(expectedStatus);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{{payload}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/apply-coupon",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Login",
       "request": {
         "method": "POST",
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{{payload}}",
+          "raw": "{\r\n    \"email\":\"test@eshop.com\",\r\n    \"password\": \"Test1234!\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -53,13 +166,13 @@
           }
         },
         "url": {
-          "raw": "{{base_url}}/api/register",
+          "raw": "{{base_url}}/api/login",
           "host": [
             "{{base_url}}"
           ],
           "path": [
             "api",
-            "register"
+            "login"
           ]
         }
       },

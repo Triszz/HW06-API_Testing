@@ -296,6 +296,21 @@ Dưới đây là danh sách 5 lỗi (Bugs) nghiêm trọng được bóc tách 
   - **Functional Logic (Case Sensitivity & Decimal - TC_COUPON_38, 39):** AI suy luận máy móc theo Mock Data (luôn truyền mã viết hoa và số tiền chẵn). Tôi bổ sung case truyền chữ thường (`save10`) và số tiền thập phân (`500000.99`) để đo lường độ chịu lỗi của thuật toán làm tròn (Rounding) và tính thân thiện (UX) của tính năng.
   - **State Transitions (TC_COUPON_40):** Để kiểm tra biểu đồ trạng thái, tôi tái sử dụng chính xác Payload của `user_id: 1` từ `TC_COUPON_01`. Tại thời điểm này, do DB đã cập nhật trạng thái đã sử dụng, kịch bản phải chuyển từ Happy Path (200 OK) thành Exception (400 Bad Request - Limit Exceeded).
 
+---
+
+### 3.4. Execute
+
+Quá trình thực thi kiểm thử cho API Áp dụng Mã giảm giá (`POST /api/apply-coupon`) được tiến hành như sau:
+
+- **Công cụ thực thi:** - Giao diện Postman để thiết lập kịch bản và chạy Collection Runner.
+  - Newman CLI để chạy chính thức và xuất HTML Report. Lệnh thực thi:
+    `newman run HW06_API_Test_Suite.postman_collection.json -e "EShop - Local Environment.postman_environment.json" -d coupon_data.csv -r htmlextra`
+- **Dữ liệu đầu vào (Data-driven):** File `coupon_data.csv` chứa 40 Test Cases. Do API yêu cầu truyền Header `Authorization: Bearer <token>`, em đã thiết lập Pre-request Script ở cấp độ Request để linh hoạt tiêm (inject) Token hợp lệ cho các kịch bản Happy Path, và cố tình tiêm Token sai/xóa Token cho các kịch bản kiểm thử bảo mật (TC_COUPON_12, 34, 35).
+- **Cơ chế Anti-Cheat:** Request API 2 kế thừa thành công _Pre-request Script_ của Collection, tự động đính kèm Header `X-Student-Id: 23127503` (Minh chứng qua Console log).
+- **Kết quả:** Quá trình Execute thành công xuất file báo cáo HTML. Đã phát hiện hàng loạt các điểm không đồng nhất giữa kết quả thực tế của SUT và đặc tả kỳ vọng, ghi nhận chi tiết tại mục Report Bugs.
+
+---
+
 ## 4. API 3: Product Management (Pool C)
 
 - **Endpoint:** `POST/PUT/DELETE /api/products`
