@@ -1,0 +1,41 @@
+test_id,payload,expected_status
+TC_PROD_01,"{""name"":""Laptop Dell XPS"",""price"":35000000,""description"":""Laptop cao cấp"",""imageUrl"":""http://img.com/1"",""category_id"":1}",200
+TC_PROD_02,"{""name"":""Chuột Logitech"",""price"":500000,""category_id"":2}",200
+TC_PROD_03,"{""name"":""Kẹp giấy"",""price"":1,""category_id"":3}",200
+TC_PROD_04,"{""name"":""Hàng tặng"",""price"":0,""category_id"":3}",400
+TC_PROD_05,"{""name"":""Hàng lỗi"",""price"":-1,""category_id"":3}",400
+TC_PROD_06,"{""name"":""A (lặp lại 255 chữ A)"",""price"":100000,""category_id"":1}",200
+TC_PROD_07,"{""name"":""A (lặp lại 256 chữ A)"",""price"":100000,""category_id"":1}",400
+TC_PROD_08,"{""price"":100000,""category_id"":1}",400
+TC_PROD_09,"{""name"":""Laptop"",""category_id"":1}",400
+TC_PROD_10,"{""name"":""Laptop"",""price"":100000}",400
+TC_PROD_11,"{""name"":""Laptop"",""price"":""100000"",""category_id"":1}",400
+TC_PROD_12,"{""name"":""Laptop"",""price"":100000,""category_id"":""1""}",400
+TC_PROD_13,"{""name"":12345,""price"":100000,""category_id"":1}",400
+TC_PROD_14,"{""name"":""Laptop"",""price"":100000,""category_id"":999}",400
+TC_PROD_15,"{""name"":"""",""price"":100000,""category_id"":1}",400
+TC_PROD_16,"{""name"":""Laptop"",""price"":100000.5,""category_id"":1}",400
+TC_PROD_17,"{""name"":""Laptop"",""price"":100000,""category_id"":0}",400
+TC_PROD_18,"{""name"":""Laptop"",""price"":100000,""description"":123,""category_id"":1}",400
+TC_PROD_19,{},400
+TC_PROD_20,"{""name"":""A"",""price"":100000,""category_id"":1}",200
+TC_PROD_21,"{""name"":""Chuột"",""price"":100000,""category_id"":1}",403
+TC_PROD_22,"{""name"":""Chuột"",""price"":100000,""category_id"":1}",401
+TC_PROD_23,"{""name"":""Chuột"",""price"":100000,""category_id"":1}",401
+TC_PROD_24,"{""name"":""Chuột"",""price"":100000,""category_id"":1}",401
+TC_PROD_25,"{""name"":""Laptop' OR 1=1--"",""price"":100000,""category_id"":1}",400
+TC_PROD_26,"{""name"":""<script>alert(1)</script>"",""price"":100000,""category_id"":1}",400
+TC_PROD_27,"{""id"":9999,""name"":""Hack"",""price"":100000,""category_id"":1}",400
+TC_PROD_28,"{""name"":""Chuột"",""price"":100000,""category_id"":1}",415
+TC_PROD_29,"{""name"":""Vàng"",""price"":2147483647,""category_id"":1}",200
+TC_PROD_30,"[{""name"":""Chuột"",""price"":100000,""category_id"":1}]",400
+TC_PROD_31,"{""name"":""Chuột"",""price"":100000,""category_id"":1,""description"":""'; DROP TABLE products; --""}",400
+TC_PROD_32,"{""name"":""Chuột"",""price"":100000,""category_id"":1,""imageUrl"":""not-a-link""}",400
+TC_PROD_33,"{""name"":""Spam"",""price"":10000,""category_id"":1}",429
+TC_PROD_34,"{""name"":""1"",""price"":100000,""category_id"":1}",200
+TC_PROD_35,"{""name"":""Chuột"",""price"":100000,""category_id"":1}",405
+TC_PROD_36,"{""name"":""   "",""price"":100000,""category_id"":1}",400
+TC_PROD_37,"{""name"":""Chuột"",""price"":100000,""category_id"":1,""imageUrl"":""javascript:alert(1)""}",400
+TC_PROD_38,"{""name"":""Bàn phím"",""price"":150000,""category_id"":-1}",400
+TC_PROD_39,"{""name"":""Chuột"",""price"":{},""category_id"":1}",400
+TC_PROD_40,"{""name"":""Chuột"",""price"":100000,""category_id"":1,""description"":""[Chuỗi siêu dài để test DoS - Giả lập payload 10MB]""}",413
