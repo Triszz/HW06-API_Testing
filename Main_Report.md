@@ -311,6 +311,184 @@ Quá trình thực thi kiểm thử cho API Áp dụng Mã giảm giá (`POST /a
 
 ---
 
+### 3.5. Report Bugs
+
+Kết quả phân tích 25 kịch bản bị Failed từ báo cáo Newman cho thấy API `POST /api/apply-coupon` chứa đựng nhiều khiếm khuyết nghiêm trọng từ logic cốt lõi cho đến bảo mật.
+
+Dưới đây là danh sách 7 Bugs đã được phân loại và ghi nhận lên hệ thống GitHub Issues:
+
+### 1. [Critical] Authentication Bypass & Lỗ hổng IDOR (Bỏ qua xác thực và Kiểm soát truy cập)
+
+- **Mức độ (Severity):** **CRITICAL**
+
+- **Phân loại (Category):** **Security** (Broken Authentication & Access Control)
+
+- **Mô tả chi tiết:** Backend hoàn toàn không kiểm tra Header `Authorization`. API trả về `200 OK` cho mọi trường hợp: không truyền Token (`TC_COUPON_12`), Token rác (`TC_COUPON_34`), và Token hết hạn (`TC_COUPON_35`). Hậu quả kéo theo là lỗi IDOR (`TC_COUPON_29`): Hệ thống tin tưởng tuyệt đối vào trường `user_id` truyền trong Body. Một người dùng bất kỳ có thể điền `user_id` của người khác để "xài chùa" mã giảm giá của họ.
+
+- **Tác động (Impact):** Lỗ hổng bảo mật mức độ cao nhất. Hacker có thể viết script quét toàn bộ `user_id` từ 1 đến 100.000 để dùng sạch mã giảm giá của toàn bộ khách hàng trong hệ thống.
+
+- **GitHub Issue Link:** https://github.com/Triszz/HW06-API_Testing/issues/6
+
+- **Ảnh chụp (Screenshot):**
+
+  ![alt text](images/image-13.png)
+
+  <center><i>Không truyền Authorization Bearer Token</i></center>
+
+  <br>
+
+  ![alt text](images/image-14.png)
+
+  <center><i>Truyền Authorization Bearer Token rác</i></center>
+
+  <br>
+
+  ![alt text](images/image-15.png)
+
+  <center><i>Truyền Authorization Bearer Token hết hạn</i></center>
+
+### 2. [Critical] Lỗ hổng Mass Assignment (Thao túng số tiền giảm giá)
+
+- **Mức độ (Severity):** **CRITICAL**
+
+- **Phân loại (Category):** **Security** (Injection/Mass Assignment)
+
+- **Mô tả chi tiết:** Ở `TC_COUPON_30`, khi cố tình chèn thêm trường `"discount_amount": 999999` vào Request Body, hệ thống vẫn chấp nhận (`200 OK`) thay vì từ chối (400 Bad Request).
+
+- **Tác động (Impact):** Mặc dù cần kiểm tra thêm ở Database xem server có thực sự lấy con số bị thao túng này để trừ tiền hay không, nhưng việc API chấp nhận các trường tính toán từ phía Client là rủi ro cực lớn. Hacker có thể ép server giảm giá 100% cho mọi đơn hàng.
+
+- **GitHub Issue Link:** https://github.com/Triszz/HW06-API_Testing/issues/7
+
+- **Ảnh chụp (Screenshot):**
+
+  ![alt text](images/image-16.png)
+
+### 3. [Critical] Lỗi sai Thuật toán tính toán phần trăm
+
+- **Mức độ (Severity):** **CRITICAL**
+
+- **Phân loại (Category):** **Functional** (Business Logic/Math Error)
+
+- **Mô tả chi tiết:** Ở `TC_COUPON_01` (và tất cả các case dùng mã Percent), khi áp dụng mã `SAVE10` (giảm 10%) cho đơn hàng 500.000 VNĐ. Kỳ vọng số tiền giảm là 50.000 VNĐ. Tuy nhiên, Server lại tính toán sai lệch hoàn toàn, trả về `"discount_amount": -4500000` và `"final_amount": 5000000`.
+
+- **Tác động (Impact):** Đây là lỗi logic cốt lõi (Core feature broken). Người dùng sẽ phải thanh toán số tiền gấp 10 lần giá trị thực tế của đơn hàng, phá hủy hoàn toàn uy tín và doanh thu của doanh nghiệp.
+
+- **GitHub Issue Link:** https://github.com/Triszz/HW06-API_Testing/issues/8
+
+- **Ảnh chụp (Screenshot):**
+
+  ![alt text](images/image-17.png)
+
+### 4. [Major] Bỏ qua điều kiện Giới hạn số lần sử dụng (C5 - Max Uses Bypass)
+
+- **Mức độ (Severity):** **MAJOR**
+
+- **Phân loại (Category):** **Functional** (Business Logic)
+
+- **Mô tả chi tiết:** Các Test Cases kiểm tra giới hạn lượt dùng mã giảm giá (`TC_COUPON_09`, `15`, `40`) đều bị Failed do server trả về `200 OK` thay vì từ chối `400`. Logic kiểm tra điều kiện C5 (`max_uses_per_user`) hoàn toàn không hoạt động.
+
+- **Tác động (Impact):** Gây thiệt hại trực tiếp về tài chính. Một khách hàng có thể dùng đi dùng lại 1 mã giảm giá (vốn chỉ được dùng 1 lần) cho hàng trăm đơn hàng khác nhau.
+
+- **GitHub Issue Link:** https://github.com/Triszz/HW06-API_Testing/issues/9
+
+- **Ảnh chụp (Screenshot):**
+
+  ![alt text](images/image-18.png)
+
+  <center><i>Sử dụng voucher SAVE10 lần 1</i></center>
+
+  <br>
+
+  ![alt text](images/image-19.png)
+
+  <center><i>Sử dụng voucher SAVE10 lần 2</i></center>
+
+### 5. [Major] Sai Logic Toán học ở Giá trị Biên (C3 - Minimum Amount Boundary)
+
+- **Mức độ (Severity):** **MAJOR**
+
+- **Phân loại (Category):** **Functional** (Boundary Logic)
+
+- **Mô tả chi tiết:** Theo đặc tả, đơn hàng chỉ cần **lớn hơn hoặc bằng (>=)** ngưỡng tối thiểu là được dùng mã. Tuy nhiên, ở `TC_COUPON_03` và `TC_COUPON_04` (Đơn hàng vừa đúng ngưỡng 300k và 500k), API lại báo lỗi 400. Điều này chứng tỏ Developer đã code sai toán tử: dùng dấu `>` thay vì `>=`.
+
+- **Tác động (Impact):** Gây bức xúc cho người dùng. Khách hàng mua đúng 300k để được giảm giá nhưng hệ thống không cho, ép khách phải mua từ 300,001đ trở lên.
+
+- **GitHub Issue Link:** https://github.com/Triszz/HW06-API_Testing/issues/10
+
+- **Ảnh chụp (Screenshot):**
+
+  ![alt text](images/image-20.png)
+
+  <center><i>Áp dụng voucher SAVE10 cho đơn hàng 300k</i></center>
+
+  <br>
+
+  ![alt text](images/image-21.png)
+
+  <center><i>Áp dụng voucher BIGBUY cho đơn hàng 500k</i></center>
+
+### 6. [Major] Không Validate Schema và Kiểu Dữ Liệu
+
+- **Mức độ (Severity):** **MAJOR**
+
+- **Phân loại (Category):** **Functional** (Schema Validation)
+
+- **Mô tả chi tiết:** API bỏ qua mọi quy tắc kiểm tra cấu trúc dữ liệu đầu vào. Các Test cases Failed (`TC_COUPON_18`, `21`, `23`, `26`, `27`) cho thấy hệ thống trả về `200 OK` ngay cả khi: thiếu trường `user_id` bắt buộc, `total_amount` bị truyền sai kiểu thành dạng chuỗi (String), hoặc truyền số tiền siêu khổng lồ (Buffer Overflow).
+
+- **Tác động (Impact):** Rác dữ liệu, dễ dẫn đến lỗi 500 Internal Server Error ở các module xử lý thanh toán phía sau (vì mong đợi kiểu Integer nhưng lại nhận String).
+
+- **GitHub Issue Link:** https://github.com/Triszz/HW06-API_Testing/issues/11
+
+- **Ảnh chụp (Screenshot):**
+
+  ![alt text](images/image-22.png)
+
+  <center><i>Request body thiếu trường user_id</i></center>
+
+  <br>
+
+  ![alt text](images/image-23.png)
+
+  <center><i>Trường total_amount là kiểu chuỗi</i></center>
+
+### 7. [Medium] Lỗi Logic So Khớp Phân Biệt Hoa/Thường (Case-sensitive Issue)
+
+- **Mức độ (Severity):** **MEDIUM**
+
+- **Phân loại (Category):** **Functional / UX**
+
+- **Mô tả chi tiết:** Ở `TC_COUPON_38`, khi người dùng nhập mã giảm giá viết thường `"save10"`, hệ thống trả về lỗi `404 Not Found` (Kỳ vọng là `200 OK`). API đang so sánh chuỗi một cách cứng nhắc (Case-sensitive) thay vì tự động chuyển đổi sang chữ hoa (Uppercase) trước khi query Database.
+
+- **Tác động (Impact):** Trải nghiệm người dùng (UX) kém. Khách hàng dễ bị bối rối và tưởng mã bị lỗi nếu điện thoại của họ không tự động bật phím CapsLock.
+
+- **GitHub Issue Link:** https://github.com/Triszz/HW06-API_Testing/issues/12
+
+- **Ảnh chụp (Screenshot):**
+
+  ![alt text](images/image-24.png)
+
+### 8. [Medium] Thiếu cơ chế Rate Limiting (Chống Spam)
+
+- **Mức độ (Severity):** **MEDIUM**
+
+- **Phân loại (Category):** **Security** (Rate Limiting)
+
+- **Mô tả chi tiết:** Ở `TC_COUPON_33`, giả lập việc bắn 100 requests đồng thời trong 1 giây. Thay vì bị chặn bởi hệ thống với mã `429 Too Many Requests`, API lại tiếp nhận toàn bộ và trả về `200 OK`.
+
+- **Tác động (Impact):** Kẻ xấu có thể sử dụng tool tự động để spam API, gây quá tải Server (DoS) hoặc khai thác lỗ hổng Race Condition để xài mã giảm giá nhiều lần cùng một lúc.
+
+- **GitHub Issue Link:** https://github.com/Triszz/HW06-API_Testing/issues/13
+
+- **Ảnh chụp (Screenshot):**
+
+  ![alt text](images/image-25.png)
+
+---
+
+_Ghi chú thêm về HTTP Status Code:_ Quá trình test nhận thấy hệ thống trả về `HTTP 404 Not Found` thay vì `HTTP 400` cho các trường hợp mã không tồn tại, có chứa mã SQL/XSS, hoặc viết thường (TC 05, 14, 28, 31, 32, 37, 38). Điều này tuy làm fail test case (do expect 400 theo chuẩn REST chung) nhưng có thể chấp nhận được tùy theo tư duy thiết kế của Backend (Resource Not Found). Các lỗi trọng tâm nằm ở 7 Bugs đã liệt kê phía trên.
+
+---
+
 ## 4. API 3: Product Management (Pool C)
 
 - **Endpoint:** `POST/PUT/DELETE /api/products`
