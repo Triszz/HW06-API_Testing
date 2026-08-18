@@ -152,13 +152,103 @@
       ]
     },
     {
+      "name": "API 3: Product Management",
+      "item": [
+        {
+          "name": "API 3: POST /api/products",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.request.headers.upsert({key: 'X-Student-Id', value: '23127503'});\r",
+                  "console.log(\"Anti-Cheat Verification: Injected Header X-Student-Id = 23127503 for API 3\");\r",
+                  "\r",
+                  "let testId = pm.iterationData.get(\"test_id\");\r",
+                  "let adminToken = pm.environment.get(\"admin_token\"); \r",
+                  "let userToken = pm.environment.get(\"user_token\"); \r",
+                  "\r",
+                  "if (testId === \"TC_PROD_22\") {\r",
+                  "    pm.request.headers.remove(\"Authorization\");\r",
+                  "} else if (testId === \"TC_PROD_23\") {\r",
+                  "    pm.request.headers.upsert({key: 'Authorization', value: 'Bearer chuoi_token_rac_12345'});\r",
+                  "} else if (testId === \"TC_PROD_24\") {\r",
+                  "    pm.request.headers.upsert({key: 'Authorization', value: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MTYyMzkwMjJ9.signature'});\r",
+                  "} else if (testId === \"TC_PROD_21\") {\r",
+                  "    pm.request.headers.upsert({key: 'Authorization', value: 'Bearer ' + userToken});\r",
+                  "} else {\r",
+                  "    pm.request.headers.upsert({key: 'Authorization', value: 'Bearer ' + adminToken});\r",
+                  "}\r",
+                  "\r",
+                  "if (testId === \"TC_PROD_28\") {\r",
+                  "    pm.request.headers.upsert({key: 'Content-Type', value: 'text/plain'});\r",
+                  "}\r",
+                  "\r",
+                  "if (testId === \"TC_PROD_35\") {\r",
+                  "    pm.request.method = \"PATCH\";\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let expectedStatus = parseInt(pm.iterationData.get(\"expected_status\"));\r",
+                  "let testId = pm.iterationData.get(\"test_id\");\r",
+                  "\r",
+                  "pm.test(\"[\" + testId + \"] Status code matches expected: \" + expectedStatus, function () {\r",
+                  "    if (expectedStatus === 200) {\r",
+                  "        pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+                  "    } else {\r",
+                  "        pm.response.to.have.status(expectedStatus);\r",
+                  "    }\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{{payload}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
       "name": "Login",
       "request": {
         "method": "POST",
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"email\":\"test@eshop.com\",\r\n    \"password\": \"Test1234!\"\r\n}",
+          "raw": "{\r\n    \"email\":\"admin@eshop.com\",\r\n    \"password\": \"Admin123!\"\r\n}",
           "options": {
             "raw": {
               "language": "json"

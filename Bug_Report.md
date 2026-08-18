@@ -59,7 +59,7 @@ Dưới đây là các lỗi phát hiện được trong quá trình chạy Pipe
 
   ![alt text](images/image-3.png)
 
-## Issue 4. [Major] Lỗi Logic Nghiệp Vụ: Cho phép đăng ký trùng Email (Duplicate Email)
+## Issue 4: [Major] Lỗi Logic Nghiệp Vụ: Cho phép đăng ký trùng Email (Duplicate Email)
 
 - **Endpoint:** `POST /api/register`
 
@@ -77,15 +77,15 @@ Dưới đây là các lỗi phát hiện được trong quá trình chạy Pipe
 
   ![alt text](images/image-4.png)
 
-  <center><i>Tài khoản với email valid1@domain.com được tạo thành công lần 1</i></center>
+  <center><i>Tài khoản với email <code>valid1@domain.com</code> được tạo thành công lần 1</i></center>
 
   <br>
 
   ![alt text](images/image-5.png)
 
-   <center><i>Tài khoản với email valid1@domain.com được tạo thành công lần 2</i></center>
+   <center><i>Tài khoản với email <code>valid1@domain.com</code> được tạo thành công lần 2</i></center>
 
-## Issue 5. [Major] Thiếu hoàn toàn Data Validation (No Input Validation)
+## Issue 5: [Major] Thiếu hoàn toàn Data Validation (No Input Validation)
 
 - **Endpoint:** `POST /api/register`
 
@@ -110,13 +110,13 @@ Dưới đây là các lỗi phát hiện được trong quá trình chạy Pipe
 
   ![alt text](images/image-6.png)
 
-   <center><i>Tài khoản với payload rỗng {} được tạo thành công</i></center>
+   <center><i>Tài khoản với payload rỗng <code>{}</code> được tạo thành công</i></center>
 
   <br>
 
   ![alt text](images/image-7.png)
 
-   <center><i>Tài khoản với email sai định dạng (thiếu @) được tạo thành công</i></center>
+   <center><i>Tài khoản với email sai định dạng (thiếu <code>@</code>) được tạo thành công</i></center>
 
   <br>
 
@@ -130,7 +130,9 @@ Dưới đây là các lỗi phát hiện được trong quá trình chạy Pipe
 
   <center><i>Tài khoản với mật khẩu là kiểu dữ liệu boolean được tạo thành công</i></center>
 
-## Issue 6. [Critical] Authentication Bypass & Lỗ hổng IDOR (Bỏ qua xác thực và Kiểm soát truy cập)
+## Issue 6: [Critical] Authentication Bypass & Lỗ hổng IDOR (Bỏ qua xác thực và Kiểm soát truy cập)
+
+- **Endpoint:** `POST /api/apply-coupon`
 
 - **Mức độ (Severity):** **CRITICAL**
 
@@ -146,21 +148,23 @@ Dưới đây là các lỗi phát hiện được trong quá trình chạy Pipe
 
   ![alt text](images/image-13.png)
 
-  <center><i>Không truyền Authorization Bearer Token</i></center>
+  <center><i>Request headers không truyền Authorization Bearer Token</i></center>
 
   <br>
 
   ![alt text](images/image-14.png)
 
-  <center><i>Truyền Authorization Bearer Token rác</i></center>
+  <center><i>Request headers truyền Authorization Bearer Token rác</i></center>
 
   <br>
 
   ![alt text](images/image-15.png)
 
-  <center><i>Truyền Authorization Bearer Token hết hạn</i></center>
+  <center><i>Request headers truyền Authorization Bearer Token hết hạn</i></center>
 
-## Issue 7. [Critical] Lỗ hổng Mass Assignment (Thao túng số tiền giảm giá)
+## Issue 7: [Critical] Lỗ hổng Mass Assignment (Thao túng số tiền giảm giá)
+
+- **Endpoint:** `POST /api/apply-coupon`
 
 - **Mức độ (Severity):** **CRITICAL**
 
@@ -176,7 +180,9 @@ Dưới đây là các lỗi phát hiện được trong quá trình chạy Pipe
 
   ![alt text](images/image-16.png)
 
-## Issue 8. [Critical] Lỗi sai Thuật toán tính toán phần trăm
+## Issue 8: [Critical] Lỗi sai Thuật toán tính toán phần trăm
+
+- **Endpoint:** `POST /api/apply-coupon`
 
 - **Mức độ (Severity):** **CRITICAL**
 
@@ -192,7 +198,9 @@ Dưới đây là các lỗi phát hiện được trong quá trình chạy Pipe
 
   ![alt text](images/image-17.png)
 
-## Issue 9. [Major] Bỏ qua điều kiện Giới hạn số lần sử dụng (C5 - Max Uses Bypass)
+## Issue 9: [Major] Bỏ qua điều kiện Giới hạn số lần sử dụng (C5 - Max Uses Bypass)
+
+- **Endpoint:** `POST /api/apply-coupon`
 
 - **Mức độ (Severity):** **MAJOR**
 
@@ -208,15 +216,17 @@ Dưới đây là các lỗi phát hiện được trong quá trình chạy Pipe
 
   ![alt text](images/image-18.png)
 
-  <center><i>Sử dụng voucher SAVE10 lần 1</i></center>
+  <center><i>Sử dụng voucher <code>SAVE10</code> lần 1</i></center>
 
   <br>
 
   ![alt text](images/image-19.png)
 
-  <center><i>Sử dụng voucher SAVE10 lần 2</i></center>
+  <center><i>Sử dụng voucher <code>SAVE10</code> lần 2</i></center>
 
-## Issue 10. [Major] Sai Logic Toán học ở Giá trị Biên (C3 - Minimum Amount Boundary)
+## Issue 10: [Major] Sai Logic Toán học ở Giá trị Biên (C3 - Minimum Amount Boundary)
+
+- **Endpoint:** `POST /api/apply-coupon`
 
 - **Mức độ (Severity):** **MAJOR**
 
@@ -232,15 +242,17 @@ Dưới đây là các lỗi phát hiện được trong quá trình chạy Pipe
 
   ![alt text](images/image-20.png)
 
-  <center><i>Áp dụng voucher SAVE10 cho đơn hàng 300k</i></center>
+  <center><i>Áp dụng voucher <code>SAVE10</code> cho đơn hàng 300k</i></center>
 
   <br>
 
   ![alt text](images/image-21.png)
 
-  <center><i>Áp dụng voucher BIGBUY cho đơn hàng 500k</i></center>
+  <center><i>Áp dụng voucher <code>BIGBUY</code> cho đơn hàng 500k</i></center>
 
-## Issue 11. [Major] Không Validate Schema và Kiểu Dữ Liệu
+## Issue 11: [Major] Không Validate Schema và Kiểu Dữ Liệu
+
+- **Endpoint:** `POST /api/apply-coupon`
 
 - **Mức độ (Severity):** **MAJOR**
 
@@ -256,15 +268,17 @@ Dưới đây là các lỗi phát hiện được trong quá trình chạy Pipe
 
   ![alt text](images/image-22.png)
 
-  <center><i>Request body thiếu trường user_id</i></center>
+  <center><i>Request body thiếu trường <code>user_id</code></i></center>
 
   <br>
 
   ![alt text](images/image-23.png)
 
-  <center><i>Trường total_amount là kiểu chuỗi</i></center>
+  <center><i>Trường <code>total_amount</code> là kiểu chuỗi</i></center>
 
-## Issue 12. [Medium] Lỗi Logic So Khớp Phân Biệt Hoa/Thường (Case-sensitive Issue)
+## Issue 12: [Medium] Lỗi Logic So Khớp Phân Biệt Hoa/Thường (Case-sensitive Issue)
+
+- **Endpoint:** `POST /api/apply-coupon`
 
 - **Mức độ (Severity):** **MEDIUM**
 
@@ -280,7 +294,9 @@ Dưới đây là các lỗi phát hiện được trong quá trình chạy Pipe
 
   ![alt text](images/image-24.png)
 
-## Issue 13. [Medium] Thiếu cơ chế Rate Limiting (Chống Spam)
+## Issue 13: [Medium] Thiếu cơ chế Rate Limiting (Chống Spam)
+
+- **Endpoint:** `POST /api/apply-coupon`
 
 - **Mức độ (Severity):** **MEDIUM**
 
@@ -295,3 +311,162 @@ Dưới đây là các lỗi phát hiện được trong quá trình chạy Pipe
 - **Ảnh chụp (Screenshot):**
 
   ![alt text](images/image-25.png)
+
+## Issue 14: [Critical] Authentication Bypass & Role Escalation (Thiếu hoàn toàn xác thực)
+
+- **Endpoint:** `POST /api/products`
+
+- **Mức độ (Severity):** **CRITICAL**
+
+- **Phân loại (Category):** **Security** (Broken Access Control)
+
+- **Mô tả chi tiết:** Đặc tả yêu cầu API thêm sản phẩm chỉ dành cho Admin (FR-15). Tuy nhiên, hệ thống trả về `200 OK` cho toàn bộ các kịch bản: Không truyền Token (`TC_PROD_22`), Truyền Token hết hạn (`TC_PROD_24`), và Truyền Token của khách hàng thường (`TC_PROD_21`).
+
+- **Tác động (Impact):** Bất kỳ ai (kể cả khách vãng lai hoặc hacker) cũng có thể tự do gọi API này để bơm hàng triệu sản phẩm rác vào hệ thống EShop.
+
+- **GitHub Issue Link:** https://github.com/Triszz/HW06-API_Testing/issues/14
+
+- **Ảnh chụp (Screenshot):**
+
+  ![alt text](images/image-27.png)
+
+  <center><i>Request headers không truyền Authorization Bearer Token</i></center>
+
+  <br>
+
+  ![alt text](images/image-28.png)
+
+  <center><i>Request headers truyền Authorization Bearer Token hết hạn</i></center>
+
+  <br>
+
+  ![alt text](images/image-29.png)
+
+  <center><i>Request headers truyền Authorization Bearer Token của khách hàng thường</i></center>
+
+## Issue 15: [Critical] Stored XSS qua trường tùy chọn (Optional Fields)
+
+- **Endpoint:** `POST /api/products`
+
+- **Mức độ (Severity):** **CRITICAL**
+
+- **Phân loại (Category):** **Security** (Cross-Site Scripting)
+
+- **Mô tả chi tiết:** Hệ thống lưu trữ trực tiếp dữ liệu thô vào CSDL mà không có bước mã hóa (Sanitization). Cụ thể, khi truyền `<script>alert(1)</script>` vào `name` (`TC_PROD_26`) hoặc chuỗi `javascript:alert(1)` vào `imageUrl` (`TC_PROD_37`), server vẫn khởi tạo sản phẩm thành công.
+
+- **Tác động (Impact):** Mã độc này sẽ được lưu vào Database. Khi người dùng (hoặc Admin) mở trang xem danh sách sản phẩm, mã độc JS sẽ kích hoạt, dẫn đến việc hacker có thể chiếm đoạt Cookie/Session và cướp tài khoản Admin.
+
+- **GitHub Issue Link:** https://github.com/Triszz/HW06-API_Testing/issues/15
+
+- **Ảnh chụp (Screenshot):**
+
+  ![alt text](images/image-30.png)
+
+  <center><i>Request body truyền <code>&lt;script&gt;alert(1)&lt;/script&gt;</code> vào trường <code>name</code></i></center>
+
+  <br>
+
+  ![alt text](images/image-31.png)
+
+  <center><i>Request body truyền chuỗi <code>javascript:alert(1)</code> vào trường <code>imageUrl</code></i></center>
+
+## Issue 16: [Critical] Server Crash & Rò rỉ Stack Trace do lỗi Content-Type
+
+- **Endpoint:** `POST /api/products`
+
+- **Mức độ (Severity):** **CRITICAL**
+
+- **Phân loại (Category):** **Security / Error Handling**
+
+- **Mô tả chi tiết:** Tại `TC_PROD_28`, khi gửi payload JSON hợp lệ nhưng cố tình đổi Header `Content-Type` thành `text/plain`, server Express.js không xử lý được. Thay vì báo lỗi `400` hoặc `415`, server bị crash nội bộ và trả về một mã HTML 500 phơi bày toàn bộ mã nguồn đường dẫn nội bộ: `Cannot destructure property 'name' of 'req.body'... at D:\Software Testing\HWs\...`.
+
+- **Tác động (Impact):** Lộ lọt thông tin kiến trúc thư mục máy chủ, tạo tiền đề cho hacker tìm kiếm các lỗ hổng hệ thống sâu hơn.
+
+- **GitHub Issue Link:** https://github.com/Triszz/HW06-API_Testing/issues/16
+
+- **Ảnh chụp (Screenshot):**
+
+  ![alt text](images/image-32.png)
+
+## Issue 17: [Major] Không có bất kỳ Schema Validation nào (Chấp nhận Payload rỗng)
+
+- **Endpoint:** `POST /api/products`
+
+- **Mức độ (Severity):** **MAJOR**
+
+- **Phân loại (Category):** **Functional** (Input Validation)
+
+- **Mô tả chi tiết:** Hệ thống bỏ qua mọi quy định về Data Schema.
+  - Gửi Payload rỗng `{}` (`TC_PROD_19`) -> Vẫn tạo sản phẩm thành công.
+
+  - Thiếu tất cả trường bắt buộc (`TC_PROD_08, 09, 10`) -> Thành công.
+
+  - Truyền Object rỗng vào trường số (`price: {}`) -> Thành công.
+
+- **Tác động (Impact):** Database sẽ chứa toàn dữ liệu rác, các dòng sản phẩm không có tên, không có giá. Gây sập các UI Frontend khi parse dữ liệu.
+
+- **GitHub Issue Link:** https://github.com/Triszz/HW06-API_Testing/issues/17
+
+- **Ảnh chụp (Screenshot):**
+
+  ![alt text](images/image-33.png)
+
+  <center><i>Request body gửi payload rỗng <code>{}</code></i></center>
+
+  <br>
+
+  ![alt text](images/image-34.png)
+
+  <center><i>Request body gửi thiếu các trường bắt buộc</i></center>
+
+  <br>
+
+  ![alt text](images/image-35.png)
+
+  <center><i>Request body truyền object rỗng <code>{}</code> vào trường <code>price</code></i></center>
+
+## Issue 18: [Major] Chấp nhận Giá tiền Âm và Bằng 0
+
+- **Endpoint:** `POST /api/products`
+
+- **Mức độ (Severity):** **MAJOR**
+
+- **Phân loại (Category):** **Functional** (Boundary Logic)
+
+- **Mô tả chi tiết:** Dù đặc tả FR-15 ghi rõ `price` phải là số dương (> 0). Tuy nhiên ở `TC_PROD_04` (price = 0) và `TC_PROD_05` (price = -1), hệ thống vẫn trả về `200 OK`.
+
+- **Tác động (Impact):** Gây lỗi nghiêm trọng ở module thanh toán và doanh thu. Người dùng có thể mua sản phẩm giá 0đ hoặc thậm chí số tiền âm (cửa hàng phải trả ngược tiền cho khách).
+
+- **GitHub Issue Link:** https://github.com/Triszz/HW06-API_Testing/issues/18
+
+- **Ảnh chụp (Screenshot):**
+
+  ![alt text](images/image-36.png)
+
+  <center><i>Tạo sản phẩm với <code>price = 0</code></i></center>
+
+  <br>
+
+  ![alt text](images/image-37.png)
+
+  <center><i>Tạo sản phẩm với <code>price = -1</code></i></center>
+
+## Issue 19: [Major] Thiếu ràng buộc Khóa Ngoại (Foreign Key Constraint)
+
+- **Endpoint:** `POST /api/products`
+
+- **Mức độ (Severity):** **MAJOR**
+
+- **Phân loại (Category):** **Functional** (Database Integrity)
+
+- **Mô tả chi tiết:** Khi truyền `category_id` là `999` (Danh mục không hề tồn tại) hoặc `-1` (Số âm không hợp lệ), API vẫn báo tạo sản phẩm thành công (`TC_PROD_14`, `TC_PROD_38`).
+
+- **Tác động (Impact):** Mất tính toàn vẹn dữ liệu (Data Integrity). Sản phẩm tạo ra không thuộc về bất kỳ danh mục nào, dẫn đến việc sản phẩm không bao giờ hiển thị được lên trang chủ.
+
+- **GitHub Issue Link:** https://github.com/Triszz/HW06-API_Testing/issues/19
+
+- **Ảnh chụp (Screenshot):**
+
+  ![alt text](images/image-38.png)
+
+  <center><i>Request body truyền <code>category_id</code> không tồn tại</i></center>
